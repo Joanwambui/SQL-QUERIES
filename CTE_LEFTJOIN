@@ -1,0 +1,38 @@
+WITH
+contests_challenges AS (
+    SELECT co.contest_id, ch.challenge_id
+    FROM colleges co JOIN challenges ch ON co.college_id = ch.college_id
+),
+challenges_submissions AS (
+    SELECT
+        challenge_id,
+        SUM(total_submissions) AS total_submissions,
+        SUM(total_accepted_submissions) AS total_accepted_submissions
+    FROM submission_stats
+    GROUP BY challenge_id
+),
+challenges_views AS (
+    SELECT
+        challenge_id,
+        SUM(total_views) AS total_views,
+        SUM(total_unique_views) AS total_unique_views
+    FROM view_stats
+    GROUP BY challenge_id
+),
+contests_stats AS (
+    SELECT
+        cc.contest_id,
+        SUM(total_submissions) s1,
+        SUM(total_accepted_submissions) s2,
+        SUM(total_views) s3,
+        SUM(total_unique_views ) s4
+    FROM contests_challenges cc
+    LEFT JOIN challenges_submissions cs ON cs.challenge_id = cc.challenge_id
+    LEFT JOIN challenges_views cv ON cv.challenge_id = cc.challenge_id
+    GROUP BY cc.contest_id
+)
+SELECT co.contest_id, co.hacker_id, co.name, s1, s2, s3, s4
+FROM contests_stats ct
+JOIN contests co ON co.contest_id = ct.contest_id
+WHERE s1 + s2 + s3 + s4 != 0
+ORDER BY co.contest_id;
