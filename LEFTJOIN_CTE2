@@ -1,0 +1,30 @@
+WITH
+students_courses AS (
+    SELECT st.student_id, co.course_id
+    FROM students st JOIN enrollments en ON st.student_id = en.student_id
+    JOIN courses co ON en.course_id = co.course_id
+),
+students_attendance AS (
+    SELECT
+        student_id,
+        SUM(total_classes) AS total_classes,
+        SUM(attended_classes) AS attended_classes
+    FROM attendance
+    GROUP BY student_id
+),
+students_stats AS (
+    SELECT
+        sc.student_id,
+        COUNT(sc.course_id) AS total_courses,
+        sa.total_classes,
+        sa.attended_classes,
+        (sa.total_classes - sa.attended_classes) AS missed_classes
+    FROM students_courses sc
+    LEFT JOIN students_attendance sa ON sa.student_id = sc.student_id
+    GROUP BY sc.student_id, sa.total_classes, sa.attended_classes
+)
+SELECT st.student_id, st.name, d.department_name, ss.total_courses, ss.total_classes, ss.attended_classes, ss.missed_classes
+FROM students_stats ss
+JOIN students st ON st.student_id = ss.student_id
+JOIN departments d ON d.department_id = st.department_id
+ORDER BY st.student_id;
