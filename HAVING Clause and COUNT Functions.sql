@@ -25,3 +25,11 @@ FROM    #WorkflowSteps
 GROUP BY Workflow
 HAVING  COUNT(*) <> COUNT(CompletionDate);
 GO
+
+
+--HAVING clause with MAX function
+SELECT  Workflow
+FROM    #WorkflowSteps
+GROUP BY Workflow
+HAVING  MAX(CASE WHEN CompletionDate IS NULL THEN 1 ELSE 0 END) = 1;
+GO
