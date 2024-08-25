@@ -1,17 +1,28 @@
-WITH top_10_cte AS (
-  SELECT 
-    artists.artist_name,
-    DENSE_RANK() OVER (
-      ORDER BY COUNT(songs.song_id) DESC) AS artist_rank
-  FROM artists
-  INNER JOIN songs
-    ON artists.artist_id = songs.artist_id
-  INNER JOIN global_song_rank AS ranking
-    ON songs.song_id = ranking.song_id
-  WHERE ranking.rank <= 10
-  GROUP BY artists.artist_name
-)
+DROP TABLE IF EXISTS #GroupCriteria;
+GO
 
-SELECT artist_name, artist_rank
-FROM top_10_cte
-WHERE artist_rank <= 5;
+CREATE TABLE #GroupCriteria
+(
+OrderID      INTEGER PRIMARY KEY,
+Distributor  VARCHAR(100) NOT NULL,
+Facility     INTEGER NOT NULL,
+[Zone]       VARCHAR(100) NOT NULL,
+Amount       MONEY NOT NULL
+);
+GO
+
+INSERT INTO #GroupCriteria (OrderID, Distributor, Facility, [Zone], Amount) VALUES
+(1,'ACME',123,'ABC',100),
+(2,'ACME',123,'ABC',75),
+(3,'Direct Parts',789,'XYZ',150),
+(4,'Direct Parts',789,'XYZ',125);
+GO
+
+SELECT  DENSE_RANK() OVER (ORDER BY Distributor, Facility, [Zone]) AS CriteriaID,
+        OrderID,
+        Distributor,
+        Facility,
+        [Zone],
+        Amount
+FROM    #GroupCriteria;
+GO
