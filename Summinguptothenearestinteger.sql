@@ -1,0 +1,1 @@
+ceiling(sum(le.salary)
