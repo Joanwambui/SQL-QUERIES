@@ -17,3 +17,7 @@ INNER JOIN department AS d
   ON rs.department_id = d.department_id
 WHERE rs.ranking <= 3
 ORDER BY d.department_id, rs.salary DESC, rs.name ASC;
+
+#Normal rank grouped by category
+SELECT candy_name, candy_category, calories, RANK() OVER (PARTITION BY candy_category ORDER BY calories DESC) AS rank_in_category
+FROM candy_nutrition
