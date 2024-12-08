@@ -1,5 +1,5 @@
 SELECT CONCAT_WS(',', topping_list) AS pizza,
-       SUM(ingredient_cost) AS total_cost
+       SUM(ingredient_cost) AS total_cost 
 FROM (
     SELECT CONCAT_WS(',', t1.topping_name, t2.topping_name, t3.topping_name) AS topping_list,
            t1.ingredient_cost + t2.ingredient_cost + t3.ingredient_cost AS ingredient_cost
