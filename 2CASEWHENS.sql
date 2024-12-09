@@ -1,4 +1,5 @@
 WITH cte AS (
+
     SELECT ID, Name, Marks,
     CASE 
         WHEN Marks BETWEEN 0 AND 9 THEN 1
