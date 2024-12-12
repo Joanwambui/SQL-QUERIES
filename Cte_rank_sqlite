@@ -1,0 +1,18 @@
+WITH cte AS (
+    SELECT 
+        F.globe_id, 
+        COUNT(F.figurine_type) AS figurine_count, 
+        S.globe_name, 
+        S.material
+    FROM figurines F
+    INNER JOIN snow_globes S
+    ON S.globe_id = F.globe_id
+    GROUP BY F.globe_id, S.globe_name, S.material
+)
+SELECT 
+    globe_name, 
+    figurine_count, 
+    material
+FROM cte
+ORDER BY figurine_count DESC
+LIMIT 3;
