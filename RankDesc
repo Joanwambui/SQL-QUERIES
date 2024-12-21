@@ -1,0 +1,31 @@
+A travel agency is promoting activities for a "Summer Christmas" party.
+They want to identify the top 2 activities based on the average rating. Write a query to rank the activities by average rating.
+
+WITH cte AS (
+    SELECT 
+        A.activity_name AS activity_name, 
+        AVG(AR.rating) AS avg_rating
+    FROM 
+        activities A
+    INNER JOIN 
+        activity_ratings AR 
+    ON 
+        A.activity_id = AR.activity_id
+    GROUP BY 
+        A.activity_name
+),
+cte2 AS (
+    SELECT 
+        activity_name, 
+        avg_rating,
+        RANK() OVER (ORDER BY avg_rating DESC) AS Rnk
+    FROM 
+        cte
+)
+SELECT
+    activity_name
+FROM 
+    cte2
+ORDER BY 
+    Rnk
+LIMIT 2
