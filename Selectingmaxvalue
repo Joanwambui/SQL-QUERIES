@@ -1,0 +1,20 @@
+Scientists are studying the diets of polar bears. Write a query to find the maximum amount of food (in kilograms) consumed by each polar bear in a single meal December 2024.
+Include the bear_name and biggest_meal_kg, and sort the results in descending order of largest meal consumed.
+
+WITH cte AS (
+    SELECT 
+        P.bear_name, 
+        M.food_weight_kg, 
+        M.date
+    FROM polar_bears P
+    INNER JOIN meal_log M
+    ON P.bear_id = M.bear_id
+)
+
+SELECT 
+    bear_name, 
+    MAX(food_weight_kg) AS max_food_weight
+FROM cte
+WHERE strftime('%Y-%m', date) = '2024-12'
+GROUP BY bear_name
+ORDER BY max_food_weight DESC
