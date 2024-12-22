@@ -16,3 +16,29 @@ SELECT
 FROM cte
 ORDER BY figurine_count DESC
 LIMIT 3;
+
+
+WITH cte AS (
+    SELECT SUM(weight_kg) AS TotalWeight
+    FROM gifts
+),
+cte2 AS (
+    SELECT 
+        G.recipient_type, 
+        SUM(G.weight_kg) AS weight_kg, 
+        C.TotalWeight, 
+        ROUND(SUM(G.weight_kg) / C.TotalWeight * 100, 2) AS percentage_of_Total_Weight
+    FROM 
+        gifts G
+    CROSS JOIN 
+        cte C
+    GROUP BY 
+        G.recipient_type, 
+        C.TotalWeight
+)
+SELECT 
+    recipient_type, 
+    weight_kg, 
+    percentage_of_Total_Weight
+FROM 
+    cte2;
