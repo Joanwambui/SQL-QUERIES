@@ -1,0 +1,5 @@
+SELECT G.guest_name
+FROM guests G
+LEFT JOIN guest_gifts GG
+ON G.guest_id = GG.guest_id
+WHERE GG.guest_id IS NULL;
