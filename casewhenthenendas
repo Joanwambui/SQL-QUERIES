@@ -1,0 +1,17 @@
+SELECT *,
+    CASE
+        WHEN species_name = 'clownfish'
+             AND length BETWEEN 3 AND 7
+             AND weight BETWEEN 0.2 AND 0.8
+             AND habitat_type = 'coral reef' THEN 'not impostor'
+        WHEN species_name = 'octopus'
+             AND length BETWEEN 12 AND 36
+             AND weight BETWEEN 6.6 AND 23
+             AND habitat_type = 'coastal marine waters' THEN 'not impostor'
+        WHEN species_name = 'starfish'
+             AND length BETWEEN 0.5 AND 40
+             AND weight BETWEEN 3.3 AND 6.6
+             AND habitat_type = 'kelp forest' THEN 'not impostor'
+        ELSE 'impostor'
+    END AS impostor_status
+FROM marine_life;
