@@ -7,6 +7,7 @@ WITH highest_prices AS (
   FROM stock_prices
   GROUP BY ticker, TO_CHAR(date, 'Mon-YYYY'), open
 ),
+  
 lowest_prices AS (
   SELECT 
     ticker,
