@@ -2,6 +2,7 @@
 DROP TABLE IF EXISTS #Orders;
 GO
 
+
 CREATE TABLE #Orders
 (
 OrderID     INTEGER PRIMARY KEY,
