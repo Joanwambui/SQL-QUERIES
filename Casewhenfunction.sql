@@ -5,3 +5,4 @@ FROM facebook_posts FP
 INNER JOIN facebook_post_views FPV
 ON FP.post_id = FPV.post_id
 GROUP BY post_date
+
