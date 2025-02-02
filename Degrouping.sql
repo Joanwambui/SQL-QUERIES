@@ -9,6 +9,7 @@ Quantity            INTEGER NOT NULL
 );
 GO
 
+        
 INSERT INTO #Ungroup (ProductDescription, Quantity) VALUES
 ('Pencil',3),('Eraser',4),('Notebook',2);
 GO
