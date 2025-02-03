@@ -4,6 +4,7 @@ CREATE TABLE employeej (
     managers_id INT
 );
 
+
 INSERT INTO employeej (employee_id, position, managers_id)
 VALUES 
 (1, 'Manager', NULL),  -- Manager without a manager (top-level)
