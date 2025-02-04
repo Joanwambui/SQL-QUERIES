@@ -6,6 +6,7 @@ join trails t1 on t1.hut1=h1.id
 with cte_trails1 as 
 	(select t1.*, h1.*
 	from mountain_huts h1
+	
 	join trails t1 on t1.hut1=h1.id)
 select *
 from cte_trails1 t2
