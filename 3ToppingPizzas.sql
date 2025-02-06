@@ -5,6 +5,7 @@ FROM (
     SELECT CONCAT_WS(',', t1.topping_name, t2.topping_name, t3.topping_name) AS topping_list,
            t1.ingredient_cost + t2.ingredient_cost + t3.ingredient_cost AS ingredient_cost
     FROM pizza_toppings t1
+       
     JOIN pizza_toppings t2 ON t1.topping_name < t2.topping_name
        
     JOIN pizza_toppings t3 ON t2.topping_name < t3.topping_name AND t1.topping_name < t3.topping_name
