@@ -8,6 +8,7 @@ String          VARCHAR(100) NOT NULL
 );
 GO
 
+        
 INSERT INTO #DMLTable (SequenceNumber, String) VALUES
 (1,'SELECT'),
 (2,'Product,'),
