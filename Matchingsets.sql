@@ -8,6 +8,7 @@ License     VARCHAR(100),
 PRIMARY KEY (EmployeeID, License)
 );
 GO
+        
 
 INSERT INTO #Employees (EmployeeID, License) VALUES
 (1001,'Class A'),(1001,'Class B'),(1001,'Class C'),
