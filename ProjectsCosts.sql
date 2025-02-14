@@ -5,6 +5,7 @@ with cte as (
     join linkedin_employees le on le.id = lep.emp_id
     group by lp.title, lp.budget, start_date, end_date
 )
+    
 select title, budget, prorated_employee_expense
 from cte
 where prorated_employee_expense > budget
