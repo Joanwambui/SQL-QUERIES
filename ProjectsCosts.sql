@@ -7,5 +7,6 @@ with cte as (
 )
     
 select title, budget, prorated_employee_expense
-from cte
+from 
+    
 where prorated_employee_expense > budget
