@@ -8,3 +8,13 @@ WHERE MONTH(time_stamp) = 12
     OR CAST(time_stamp AS TIME) > '18:00:00'
     OR (DAY(time_stamp) IN (25, 26) AND MONTH(time_stamp) = 12)
   );
+
+
+
+Bank of Ireland has requested that you detect invalid transactions in December 2022.
+An invalid transaction is one that occurs outside of the bank's normal business hours. The following are the hours of operation for all branches:
+
+Monday - Friday 09:00 - 16:00
+Saturday & Sunday Closed
+Irish Public Holidays 25th and 26th December
+Determine the transaction ids of all invalid transactions.
