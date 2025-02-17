@@ -1,0 +1,10 @@
+SELECT transaction_id
+FROM boi_transactions
+WHERE MONTH(time_stamp) = 12
+  AND YEAR(time_stamp) = 2022
+  AND (
+    DATEPART(dw, time_stamp) IN (1, 7) -- 1 for Sunday, 7 for Saturday
+    OR CAST(time_stamp AS TIME) < '09:00:00'
+    OR CAST(time_stamp AS TIME) > '18:00:00'
+    OR (DAY(time_stamp) IN (25, 26) AND MONTH(time_stamp) = 12)
+  );
