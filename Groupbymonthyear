@@ -1,0 +1,5 @@
+SELECT DISTINCT COUNT(user_id) AS unique_users, 
+       client_id, 
+       FORMAT(time_id, 'yyyy-MM') AS month_year
+FROM fact_events_
+GROUP BY client_id, FORMAT(time_id, 'yyyy-MM');
