@@ -5,6 +5,7 @@ JOIN Colleges AS col
 ON con.contest_id = col.contest_id
 JOIN Challenges AS cha 
 ON cha.college_id = col.college_id
+       
 LEFT JOIN
 (SELECT ss.challenge_id, SUM(ss.total_submissions) AS total_submissions, SUM(ss.total_accepted_submissions) AS total_accepted_submissions FROM 
 Submission_Stats AS ss GROUP BY ss.challenge_id) AS sg
