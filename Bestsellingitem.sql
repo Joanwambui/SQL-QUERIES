@@ -2,7 +2,7 @@
 --The best selling item is calculated using the formula (unitprice * quantity). Output the month, the description of the item along with the amount paid.
 
 
-SELECT month_,description, amount_paid
+SELECT month_,description , amount_paid
 FROM (
 SELECT *, MONTH(CAST (invoicedate AS DATE)) AS Month_, (unitprice*quantity) AS amount_paid
 FROM online_retail) AS subquery
