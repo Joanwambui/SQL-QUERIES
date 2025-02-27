@@ -7,6 +7,7 @@ WITH cte AS (
     ORDER BY DAYNO
 )
 
+    
 SELECT 
 
 DATE(measurement_time) AS measurement_day,
