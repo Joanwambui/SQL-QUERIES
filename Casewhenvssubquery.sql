@@ -7,6 +7,7 @@ WITH cte AS (
     FROM Purchases
 )
 
+    
 SELECT 
     customer_id,
     transaction_id,
