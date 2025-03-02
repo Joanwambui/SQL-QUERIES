@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS #Sales;
 GO
 
+        
 CREATE TABLE #Sales
 (
 [Year]  INTEGER NOT NULL,
