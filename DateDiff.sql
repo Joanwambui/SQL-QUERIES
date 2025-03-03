@@ -9,6 +9,7 @@ PRIMARY KEY (WorkFlow, ExecutionDate)
 );
 GO
 
+    
 INSERT INTO #ProcessLog (WorkFlow, ExecutionDate) VALUES
 ('Alpha','6/01/2018'),('Alpha','6/14/2018'),('Alpha','6/15/2018'),
 ('Bravo','6/1/2018'),('Bravo','6/2/2018'),('Bravo','6/19/2018'),
