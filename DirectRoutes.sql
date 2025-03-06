@@ -44,6 +44,7 @@ FROM #Routes
 WHERE DepartureCity = 'Austin';
 GO
 
+    
 -- Display the result
 SELECT RoutePath, TotalCost
 FROM #SimpleRoutes
