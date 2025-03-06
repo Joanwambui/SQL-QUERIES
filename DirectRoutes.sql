@@ -4,6 +4,7 @@
 DROP TABLE IF EXISTS #Routes;
 GO
 
+    
 CREATE TABLE #Routes
 (
 RouteID        INTEGER NOT NULL,
