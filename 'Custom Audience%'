@@ -1,0 +1,10 @@
+WITH cte AS (
+    SELECT Ad.impressions
+    FROM audience_segments Au
+    INNER JOIN ad_performance Ad
+    ON Au.audience_segment_id = Ad.audience_segment_id
+    WHERE Au.segment_name LIKE 'Custom Audience%'
+    AND Ad.date BETWEEN '2024-10-01' AND '2024-10-31'
+)
+SELECT SUM(impressions) AS Total_Ad_Impressions
+FROM cte;
