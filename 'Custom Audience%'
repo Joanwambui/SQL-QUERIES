@@ -8,3 +8,17 @@ WITH cte AS (
 )
 SELECT SUM(impressions) AS Total_Ad_Impressions
 FROM cte;
+
+
+WITH cte AS (
+    SELECT Ad.impressions, Ad.conversions, Au.segment_name, Ad.ad_spend
+    FROM audience_segments Au
+    INNER JOIN ad_performance Ad
+    ON Au.audience_segment_id = Ad.audience_segment_id
+    WHERE (Au.segment_name LIKE 'Custom Audience%' OR Au.segment_name LIKE 'Lookalike Audience%')
+    AND Ad.ad_spend != 0 
+    AND Ad.conversions != 0
+)
+SELECT SUM(ad_spend) / SUM(conversions) AS Cost_per_conversion, segment_name
+FROM cte
+GROUP BY segment_name;
