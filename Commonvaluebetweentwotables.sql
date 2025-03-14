@@ -13,6 +13,8 @@ FROM users1 U
 SELECT *
 FROM friends1 F
 
+  
+
 --You are analyzing a social network dataset at Google. 
 --Your task is to find mutual friends between two users, Karl and Hans. There is only one user named Karl and one named Hans in the dataset.
 
