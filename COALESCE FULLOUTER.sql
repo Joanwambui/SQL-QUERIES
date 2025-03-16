@@ -6,6 +6,7 @@ SELECT
     WHEN paid IS NOT NULL AND advertiser.status = 'CHURN' THEN 'RESURRECT'
     WHEN paid IS NOT NULL AND advertiser.status IS NULL THEN 'NEW'
   END AS new_status
+  
 FROM advertiser
 FULL OUTER JOIN daily_pay
   ON advertiser.user_id = daily_pay.user_id
