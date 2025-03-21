@@ -5,6 +5,7 @@ CREATE TABLE customers (
 );
 
 
+
 INSERT INTO customers (customer_id, full_name)
 VALUES 
 (1, 'John Doe'),
