@@ -10,6 +10,7 @@ WHERE rnk = 1 OR cnt = 1
 ORDER BY Total_Challenge DESC, hacker_id ASC;
 
 
+
 '''
 Julia asked her students to create some coding challenges. 
 Write a query to print the hacker_id, name, and the total number of challenges created by each student. 
