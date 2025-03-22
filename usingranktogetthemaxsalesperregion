@@ -1,0 +1,32 @@
+WITH NovemberDeliveries AS (
+    SELECT
+        sd.supplier_id,
+        s.supplier_name,
+        sd.manufacturing_region,
+        SUM(sd.component_count) AS TotalComponents
+    FROM
+        supplier_deliveries sd
+    INNER JOIN
+        suppliers s ON sd.supplier_id = s.supplier_id
+    WHERE
+        strftime('%Y-%m', sd.delivery_date) = '2024-11'
+    GROUP BY
+        sd.supplier_id, s.supplier_name, sd.manufacturing_region
+),
+RankedSuppliers AS (
+    SELECT
+        supplier_name,
+        manufacturing_region,
+        TotalComponents,
+        ROW_NUMBER() OVER (PARTITION BY manufacturing_region ORDER BY TotalComponents DESC) AS Rank
+    FROM
+        NovemberDeliveries
+)
+SELECT
+    supplier_name,
+    manufacturing_region,
+    TotalComponents
+FROM
+    RankedSuppliers
+WHERE
+    Rank = 1;
