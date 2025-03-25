@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS #RegionSales;
 GO
 
+
 CREATE TABLE #RegionSales
 (
 Region       VARCHAR(100),
