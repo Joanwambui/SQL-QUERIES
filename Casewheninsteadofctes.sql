@@ -3,6 +3,7 @@ WITH cte_cake AS (
     FROM desserts 
     WHERE product = 'Cake'
 ),
+    
 cte_pie AS (
     SELECT date_sold, COALESCE(amount_sold, 0) AS amount_sold
     FROM desserts 
