@@ -12,6 +12,7 @@ LEFT JOIN phone_info AS receiver
 WHERE caller.country_id <> receiver.country_id
 )
 
+  
 SELECT 
   ROUND(
     100.0 * COUNT(*)
