@@ -1,5 +1,6 @@
 Clustered Index 
 Determines the physical order of data rows in a table
 Each table can have only one of this type of index
+
 The data rows in a table with this type of index are physically stored on disk
 the leaf nodes of this type index contain actual data rows
