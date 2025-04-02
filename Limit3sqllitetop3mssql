@@ -1,0 +1,10 @@
+SELECT 
+    a.filter_name, 
+    SUM(b.interaction_count) AS total_interactions
+FROM ar_filters a
+INNER JOIN ar_filter_engagements b
+    ON a.filter_id = b.filter_id
+WHERE strftime('%Y-%m', b.engagement_date) = '2024-09'
+GROUP BY a.filter_name
+ORDER BY total_interactions DESC
+LIMIT 3
