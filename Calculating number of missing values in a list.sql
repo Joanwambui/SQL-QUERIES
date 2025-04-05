@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS #SeatingChart;
 GO
 
+        
 CREATE TABLE #SeatingChart
 (
 SeatNumber  INTEGER PRIMARY KEY
