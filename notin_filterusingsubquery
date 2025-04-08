@@ -1,0 +1,10 @@
+SELECT supplier_name
+FROM suppliers
+WHERE supplier_id NOT IN (
+    SELECT supplier_id
+    FROM supplier_deliveries
+    WHERE manufacturing_region = 'Asia'
+    AND strftime('%Y-%m', delivery_date) = '2024-12'
+);
+
+-- Wanted to get suppliers names that are in the general table but not in the subquery - to see suppliers who never supplied to Asia in Dec 2024
