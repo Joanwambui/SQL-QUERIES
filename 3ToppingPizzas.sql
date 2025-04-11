@@ -1,4 +1,4 @@
-SELECT CONCAT_WS(',', topping_list) AS pizza,
+ SELECT CONCAT_WS(',', topping_list) AS pizza,
        
        SUM(ingredient_cost) AS total_cost 
 FROM (
