@@ -10,6 +10,7 @@ Price      MONEY
 GO
 
         
+        
 INSERT INTO #Vehicles (VehicleID, [Type], Model, Price) VALUES
 (1, 'Car','Rolls-Royce Phantom', 460000),
 (2, 'Car','Cadillac CT5', 39000),
