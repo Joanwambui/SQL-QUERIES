@@ -1,0 +1,17 @@
+WITH cte_total AS (
+    SELECT COUNT(booking_id) AS total_bookings
+    FROM fct_corporate_bookings
+    WHERE strftime('%Y-%m', booking_date) = '2024-02'
+),
+cte_advance AS (
+    SELECT COUNT(booking_id) AS advance_bookings
+    FROM fct_corporate_bookings
+    WHERE strftime('%Y-%m', booking_date) = '2024-02'
+      AND julianday(travel_date) - julianday(booking_date) > 30
+)
+SELECT
+    ROUND(
+        100.0 * cte_advance.advance_bookings / cte_total.total_bookings,
+        2
+    ) AS percentage_advance_bookings
+FROM cte_total, cte_advance;
