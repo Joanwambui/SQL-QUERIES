@@ -1,0 +1,16 @@
+SELECT 
+    d.country_name,
+    CEIL(SUM(fm.amount_spent) * 1.0 / NULLIF(SUM(fd.num_new_subscribers), 0)) AS avg_spend_per_subscriber
+FROM 
+    fact_marketing_spend fm
+JOIN 
+    fact_daily_subscriptions fd 
+    ON fm.country_id = fd.country_id
+JOIN 
+    dimension_country d 
+    ON fm.country_id = d.country_id
+WHERE  
+    strftime('%Y-%m', fm.campaign_date) BETWEEN '2024-01' AND '2024-03'
+    AND strftime('%Y-%m', fd.signup_date) BETWEEN '2024-01' AND '2024-03'
+GROUP BY 
+    d.country_name;
