@@ -1,0 +1,4 @@
+SELECT COUNT(DISTINCT user_id) AS total_users
+FROM fct_user_interactions
+WHERE strftime('%Y-%m', interaction_date) = '2024-05'
+  AND content_type IN ('live sports commentary', 'highlights');
