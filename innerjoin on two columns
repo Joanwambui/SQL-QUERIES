@@ -1,0 +1,5 @@
+SELECT SUM(watch_time_minutes) AS total_watch_time
+FROM fct_watch_history fw
+INNER JOIN fct_recommendations fr
+ON fw.content_id = fr.content_id AND fw.user_id = fr.user_id
+WHERE fw.watch_date > fr.recommended_date
