@@ -13,6 +13,7 @@ GROUP BY c.company_code, c.founder
 ORDER BY company_code
 
 
+  
 '''
 Company: The company_code is the code of the company and founder is the founder of the company.
 
