@@ -6,6 +6,7 @@ WITH cte AS (
         PS.Salary AS Student_Salary, 
         PF.Salary AS Friends_Salary
     FROM 
+    
         Students S
     INNER JOIN 
         Friends F ON S.ID = F.ID
