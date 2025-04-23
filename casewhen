@@ -1,0 +1,15 @@
+SELECT 
+  CASE 
+    WHEN fw.watch_time_minutes < 60 THEN 'Short'
+    WHEN fw.watch_time_minutes BETWEEN 60 AND 120 THEN 'Medium'
+    ELSE 'Long'
+  END AS watch_session_category,
+  COUNT(*) AS session_count
+FROM fct_watch_history fw
+INNER JOIN fct_recommendations fr
+  ON fw.user_id = fr.user_id
+  AND fw.content_id = fr.content_id
+WHERE fw.watch_date > fr.recommended_date
+  AND fw.watch_date BETWEEN DATE('2024-01-01') AND DATE('2024-03-31')
+GROUP BY watch_session_category
+ORDER BY session_count DESC;
