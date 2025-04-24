@@ -8,6 +8,7 @@ cte2 AS (
     FROM customers
 )
 
+    
 SELECT (YTotal * 100.0 / Total) AS PercentageWithCard
 FROM cte, cte2;
 
