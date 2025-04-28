@@ -1,0 +1,9 @@
+SELECT 
+  substr(product_code, 1, 3) AS product_category_codes,
+  SUM(reorder_flag) AS reorder_count
+FROM fct_orders fo
+INNER JOIN dim_products dp ON fo.product_id = dp.product_id
+INNER JOIN dim_customers dc ON fo.customer_id = dc.customer_id
+WHERE strftime('%Y-%m', order_date) BETWEEN '2024-10' AND '2024-12'
+GROUP BY product_category_codes
+ORDER BY reorder_count DESC;
