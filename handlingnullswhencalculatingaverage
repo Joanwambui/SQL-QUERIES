@@ -1,0 +1,12 @@
+SELECT 
+  dp.category,
+  AVG(CASE 
+        WHEN fo.reorder_flag IS NULL THEN 0 
+        ELSE fo.reorder_flag 
+      END) AS avg_reorder_frequency
+FROM fct_orders fo
+INNER JOIN dim_products dp ON fo.product_id = dp.product_id
+INNER JOIN dim_customers dc ON fo.customer_id = dc.customer_id
+WHERE strftime('%Y-%m', fo.order_date) BETWEEN '2024-10' AND '2024-12'
+GROUP BY dp.category
+ORDER BY avg_reorder_frequency DESC;
