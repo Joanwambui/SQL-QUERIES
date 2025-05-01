@@ -1,0 +1,11 @@
+SELECT 
+  d.category,
+  COALESCE(SUM(f.download_count), 0) AS total_downloads
+FROM dim_app d
+LEFT JOIN fct_app_downloads f
+  ON d.app_id = f.app_id 
+  AND strftime('%Y-%m', f.download_date) = '2024-11'
+GROUP BY d.category
+ORDER BY total_downloads DESC;
+
+When required to return 0 if sum of downloads is NULL
