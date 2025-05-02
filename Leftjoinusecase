@@ -1,0 +1,32 @@
+WITH browse AS (
+  SELECT 
+    app_id, 
+    SUM(browse_count) AS total_browse
+  FROM fct_app_browsing
+  WHERE strftime('%Y-%m', browse_date) IN ('2024-10','2024-11','2024-12')
+  GROUP BY app_id
+),
+downloads AS (
+  SELECT 
+    app_id, 
+    SUM(download_count) AS total_downloads
+  FROM fct_app_downloads
+  WHERE strftime('%Y-%m', download_date) IN ('2024-10','2024-11','2024-12')
+  GROUP BY app_id
+)
+SELECT 
+  d.category,
+  d.app_type,
+  SUM(COALESCE(dl.total_downloads, 0)) * 1.0 
+    / SUM(br.total_browse) AS download_conversion_rate
+FROM dim_app d
+  JOIN browse   br ON d.app_id = br.app_id
+  LEFT JOIN downloads dl ON d.app_id = dl.app_id
+GROUP BY 
+  d.category,
+  d.app_type
+HAVING 
+  SUM(br.total_browse) > 0
+ORDER BY
+  d.category,
+  d.app_type;
