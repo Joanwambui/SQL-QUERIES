@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS #Vehicles;
 GO
 
+        
 CREATE TABLE #Vehicles (
 VehicleID  INTEGER PRIMARY KEY,
 [Type]     VARCHAR(20),
