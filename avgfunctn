@@ -1,0 +1,5 @@
+SELECT programming_language, 
+       AVG(coding_speed_improvement) AS avg_speed_improvement
+FROM fct_code_suggestions
+WHERE strftime('%Y-%m', suggestion_date) = '2024-04'
+GROUP BY programming_language;
