@@ -1,0 +1,10 @@
+SELECT 
+    programming_language || ' - ' || complexity_level AS language_complexity,
+    AVG(coding_speed_improvement) AS avg_speed,
+    AVG(error_reduction_percentage) AS avg_error_reduction,
+    (AVG(coding_speed_improvement) + AVG(error_reduction_percentage)) / 2 AS combined_metric
+FROM fct_code_suggestions
+WHERE strftime('%Y-%m', suggestion_date) = '2024-04'
+GROUP BY programming_language, complexity_level
+ORDER BY combined_metric DESC
+LIMIT 1;
