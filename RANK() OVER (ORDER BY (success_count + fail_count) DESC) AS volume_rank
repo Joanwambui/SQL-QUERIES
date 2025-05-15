@@ -1,0 +1,22 @@
+WITH cte AS (
+  SELECT 
+    merchant_category,
+    SUM(CASE WHEN transaction_status = 'SUCCESS' THEN 1 ELSE 0 END) AS success_count,
+    SUM(CASE WHEN transaction_status = 'FAIL'    THEN 1 ELSE 0 END) AS fail_count
+  FROM fct_transactions
+  WHERE 
+    transaction_date >= '2024-01-01'
+    AND transaction_date <= '2024-03-31'
+  GROUP BY 
+    merchant_category
+)
+SELECT
+  merchant_category,
+  success_count,
+  fail_count,
+  (success_count + fail_count)            AS total_count,
+  RANK() OVER (ORDER BY (success_count + fail_count) DESC) AS volume_rank
+FROM 
+  cte
+ORDER BY 
+  total_count DESC;
