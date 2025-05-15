@@ -1,0 +1,22 @@
+WITH cte AS (
+  SELECT 
+    merchant_category,
+    SUM(CASE WHEN transaction_status = 'SUCCESS' THEN 1 ELSE 0 END) AS success_count,
+    SUM(CASE WHEN transaction_status = 'FAIL'    THEN 1 ELSE 0 END) AS fail_count
+  FROM fct_transactions
+  WHERE 
+    -- use a straight date-range filter (enables index use) for Q1 2024
+    transaction_date >= '2024-01-01'
+    AND transaction_date <  '2024-04-01'
+  GROUP BY merchant_category
+)
+SELECT
+  merchant_category,
+  -- force floating-point division and round to two decimals
+  ROUND(success_count * 100.0 / (success_count + fail_count), 2) AS success_rate
+FROM cte
+WHERE
+  -- filter before any grouping (there is no GROUP BY here)
+  success_count * 100.0 / (success_count + fail_count) < 90
+ORDER BY
+  success_rate ASC;
