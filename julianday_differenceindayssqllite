@@ -1,0 +1,16 @@
+SELECT
+  d.store_name,
+  ROUND(
+    AVG(
+      (julianday(f.checkout_end_time) - julianday(f.checkout_start_time))
+      * 24 * 60
+    )
+  , 1) AS avg_wait_minutes
+FROM fct_checkout_times AS f
+JOIN dim_stores AS d
+  ON f.store_id = d.store_id
+WHERE f.checkout_start_time >= '2024-07-01'
+  AND f.checkout_start_time  < '2024-08-01'
+  AND f.checkout_end_time IS NOT NULL
+GROUP BY d.store_name
+ORDER BY avg_wait_minutes DESC;
