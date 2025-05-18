@@ -7,3 +7,4 @@ GROUP BY Occupation
 ORDER BY COUNT(Occupation) ASC, Occupation ASC;
 
 
+
