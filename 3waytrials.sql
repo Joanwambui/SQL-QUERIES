@@ -2,6 +2,7 @@ select t1.*, h1.*
 from mountain_huts h1
 join trails t1 on t1.hut1=h1.id
 
+
 	
 --To visualize both hut1 and hut2
 with cte_trails1 as 
