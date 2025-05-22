@@ -1,0 +1,13 @@
+SELECT
+  ROUND(
+    COUNT(DISTINCT CASE
+      WHEN f.endorsement_date >= '2024-07-01'
+       AND f.endorsement_date <  '2024-08-01'
+      THEN d.user_id
+    END) * 100.0
+    / COUNT(d.user_id),
+    2
+  ) AS pct_users_with_endorsement_in_july
+FROM dim_users d
+LEFT JOIN fct_skill_endorsements f
+  ON f.user_id = d.user_id;
