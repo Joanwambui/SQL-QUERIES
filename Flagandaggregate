@@ -1,0 +1,36 @@
+#Among users who have been endorsed for MANAGEMENT skills,
+#what percentage received endorsements for MANAGEMENT skills in September 2024?
+#How does this compare to the same metric for users with TECHNICAL skills?
+
+
+WITH user_category_flags AS (
+  SELECT
+    f.user_id,
+    s.skill_category,
+    /* mark 1 if the user got at least one endorsement in Sept-2024 for this category */
+    MAX(
+      CASE
+        WHEN f.endorsement_date >= '2024-09-01'
+         AND f.endorsement_date <  '2024-10-01'
+        THEN 1
+        ELSE 0
+      END
+    ) AS sep_flag
+  FROM fct_skill_endorsements f
+  JOIN dim_skills s
+    ON f.skill_id = s.skill_id
+  WHERE s.skill_category IN ('MANAGEMENT','TECHNICAL')
+  GROUP BY
+    f.user_id,
+    s.skill_category
+)
+SELECT
+  skill_category,
+  /* percentage = (#users with sep_flag=1) / (total #users in that category) * 100 */
+  ROUND(
+    SUM(sep_flag) * 100.0
+    / COUNT(*)
+  , 2) AS pct_received_in_sept_2024
+FROM user_category_flags
+GROUP BY skill_category
+ORDER BY skill_category;
