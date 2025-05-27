@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS #ProcessLog;
 GO
 
+        
 CREATE TABLE #ProcessLog
 (
 Workflow    VARCHAR(100),
