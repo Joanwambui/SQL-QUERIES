@@ -4,6 +4,7 @@ SELECT city, property_type,AVG(cast(bathrooms as float)),AVG(cast(bedrooms as fl
 from airbnb_search_details
 GROUP BY city, property_type
 
+  
 SELECT AVG(booking_cost) AS avg_booking_cost
 FROM fct_corporate_bookings f
 INNER JOIN dim_companies d
