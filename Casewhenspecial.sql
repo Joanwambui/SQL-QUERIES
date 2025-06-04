@@ -3,6 +3,7 @@ WITH cte AS (
     FROM customers
     WHERE has_member_card = 'Y'
 ),
+    
 cte2 AS (
     SELECT COUNT(*) AS Total
     FROM customers
