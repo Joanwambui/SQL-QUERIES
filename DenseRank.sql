@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS #GroupCriteria;
 GO
 
+        
 CREATE TABLE #GroupCriteria
 (
 OrderID      INTEGER PRIMARY KEY,
