@@ -4,6 +4,7 @@ contests_challenges AS (
     FROM colleges co JOIN challenges ch ON co.college_id = ch.college_id
 ),
 
+
 challenges_submissions AS (
     SELECT
         challenge_id,
