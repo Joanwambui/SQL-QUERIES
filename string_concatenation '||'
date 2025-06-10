@@ -1,0 +1,8 @@
+SELECT
+  COUNT(*) AS matching_file_count
+FROM fct_file_sharing AS f
+JOIN dim_organization AS d
+  ON f.organization_id = d.organization_id
+WHERE
+  strftime('%Y-%m', f.shared_date) = '2024-02'
+  AND f.file_name LIKE d.organization_name || '-%';
