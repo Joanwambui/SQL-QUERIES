@@ -7,6 +7,7 @@ FROM cte
 WHERE DATEDIFF(YEAR, birth_date, CurrentDate) -1  >= 55
 ORDER BY customer_id 
 
+    
 OR
 
 SELECT customer_id
