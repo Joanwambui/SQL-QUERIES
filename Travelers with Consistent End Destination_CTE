@@ -1,0 +1,79 @@
+-----A group of travelers embark on world tours starting with their home cities. Each traveler has an undecided itinerary that evolves over the course of the tour.
+------Some travelers decide to abruptly end their journey mid-travel and live in their last destination.
+
+----Given the dataset of dates on which they travelled between different pairs of cities, can you find out how many travellers ended back in their home city?
+
+
+
+WITH cte AS (
+    SELECT *,
+        MAX(date) OVER (PARTITION BY traveler) AS max_date,
+        MIN(date) OVER (PARTITION BY traveler) AS min_date
+    FROM travel_history
+),
+cte2 AS (
+    SELECT *,
+        CASE WHEN date = max_date THEN end_city END AS final_end,
+        CASE WHEN date = min_date THEN start_city END AS final_start
+    FROM cte
+),
+cte3 AS (
+    SELECT traveler,
+        COALESCE(MAX(final_end), MAX(final_start)) AS filled_end
+    FROM cte2
+    WHERE final_end IS NOT NULL OR final_start IS NOT NULL
+    GROUP BY traveler
+),
+cte4 AS (
+    SELECT traveler, filled_end
+    FROM cte2
+    CROSS APPLY (
+        SELECT 
+            CASE 
+                WHEN final_end IS NOT NULL AND final_end <> '' THEN final_end 
+                ELSE final_start 
+            END AS filled_end
+    ) AS x
+    WHERE filled_end IS NOT NULL AND filled_end <> ''
+)
+SELECT traveler
+FROM cte4
+GROUP BY traveler
+HAVING COUNT(DISTINCT filled_end) = 1;
+
+
+
+------solution 2
+
+with cte AS (
+SELECT *,
+       CASE 
+           WHEN date = MAX(date) OVER (PARTITION BY traveler) THEN end_city
+           ELSE ' '
+       END AS final_end,        CASE 
+           WHEN date = MIN(date) OVER (PARTITION BY traveler) THEN start_city
+           ELSE ' '
+       END AS final_start
+FROM travel_history),
+
+cte2 as (SELECT *, 
+       CASE 
+           WHEN final_end = '' AND final_start = '' THEN 1 
+           ELSE 0 
+       END AS noblanks
+FROM cte),
+
+cte3 as (
+SELECT *,            CASE 
+               WHEN final_end IS NULL OR final_end = '' THEN final_start 
+               ELSE final_end 
+           END AS filled_end
+FROM cte2
+WHERE noblanks <> 1)
+
+SELECT traveler
+FROM cte3
+GROUP BY traveler
+HAVING COUNT(DISTINCT filled_end) = 1;
+
+
