@@ -9,6 +9,7 @@ OR description LIKE '%hazelnut[,. /-]%'
 ORDER BY 1
 */
 
+
 --METHOD 2
 SELECT DISTINCT winery
 FROM winemag_p1
