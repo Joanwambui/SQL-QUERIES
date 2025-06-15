@@ -1,0 +1,28 @@
+WITH daily_metrics AS (
+  -- Step 1: compute per‐day metrics for September 2024
+  SELECT
+    DATE(usage_date)          AS day,
+    COUNT(DISTINCT user_id)   AS user_count,
+    SUM(hours_spent)          AS total_hours
+  FROM fct_multimedia_usage
+  WHERE usage_date >= '2024-09-01'
+    AND usage_date <  '2024-10-01'
+  GROUP BY DATE(usage_date)
+),
+averages AS (
+  -- Step 2: compute the overall daily averages
+  SELECT
+    AVG(user_count)   AS avg_user_count,
+    AVG(total_hours)  AS avg_total_hours
+  FROM daily_metrics
+)
+-- Final: pick only the days above both averages
+SELECT
+  dm.day,
+  dm.user_count,
+  dm.total_hours
+FROM daily_metrics dm
+CROSS JOIN averages a
+WHERE dm.user_count  > a.avg_user_count
+  AND dm.total_hours > a.avg_total_hours
+ORDER BY dm.day;
