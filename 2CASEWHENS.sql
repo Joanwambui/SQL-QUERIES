@@ -5,6 +5,7 @@ WITH cte AS (
     CASE 
 
     
+    
         WHEN Marks BETWEEN 0 AND 9 THEN 1
         WHEN Marks BETWEEN 10 AND 19 THEN 2
         WHEN Marks BETWEEN 20 AND 29 THEN 3
