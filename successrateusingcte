@@ -1,0 +1,14 @@
+WITH cte AS (
+    SELECT 
+        d.seller_segment, 
+        (COUNT(CASE WHEN payout_status = 'successful' THEN 1 END) * 100.0 / COUNT(payout_id)) AS success_rate
+    FROM fct_payouts f
+    INNER JOIN dim_sellers d ON f.seller_id = d.seller_id
+    WHERE payout_date BETWEEN '2024-07-01' AND '2024-07-31'
+    GROUP BY d.seller_segment
+)
+
+SELECT seller_segment
+FROM cte
+ORDER BY success_rate DESC
+LIMIT 1;
