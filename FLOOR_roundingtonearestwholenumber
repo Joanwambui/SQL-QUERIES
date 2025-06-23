@@ -1,0 +1,5 @@
+SELECT
+  department_id,
+  FLOOR(AVG(satisfaction_score)) AS avg_satisfaction_score
+FROM employee_satisfaction
+GROUP BY department_id;
