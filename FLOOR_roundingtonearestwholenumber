@@ -1,5 +1,14 @@
+----------------Round down
+
 SELECT
   department_id,
   FLOOR(AVG(satisfaction_score)) AS avg_satisfaction_score
 FROM employee_satisfaction
 GROUP BY department_id;
+
+-------------------Round up
+SELECT
+  job_category_id,
+  CEIL(AVG(satisfaction_score)) AS avg_satisfaction_score_rounded_up
+FROM employee_satisfaction
+GROUP BY job_category_id;
