@@ -1,5 +1,6 @@
 WITH cte AS (
 
+
     SELECT 
         F.globe_id, 
         COUNT(F.figurine_type) AS figurine_count, 
