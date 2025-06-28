@@ -1,3 +1,4 @@
+
 WITH transaction_leads AS (
     SELECT 
         user_id, 
