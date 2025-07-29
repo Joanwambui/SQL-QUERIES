@@ -1,0 +1,8 @@
+SELECT 
+  route_id,
+  delivery_partner_id,
+  pickup_count,
+  delivery_time,
+  COALESCE(earnings, (SELECT AVG(earnings) FROM fct_delivery_routes)) AS earnings_filled
+FROM 
+  fct_delivery_routes;
