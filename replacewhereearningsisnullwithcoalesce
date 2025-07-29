@@ -6,3 +6,18 @@ SELECT
   COALESCE(earnings, (SELECT AVG(earnings) FROM fct_delivery_routes)) AS earnings_filled
 FROM 
   fct_delivery_routes;
+
+
+
+
+WITH cte AS (
+  SELECT 
+    COALESCE(earnings, (SELECT AVG(earnings) FROM fct_delivery_routes)) AS earnings_filled,
+    pickup_count
+  FROM 
+    fct_delivery_routes
+)
+SELECT 
+  SUM(earnings_filled) * 1.0 / SUM(pickup_count) AS avg_earnings_per_pickup
+FROM 
+  cte;
