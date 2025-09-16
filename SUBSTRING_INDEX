@@ -1,0 +1,15 @@
+SELECT 
+    CASE 
+        WHEN instr(d.device_name, ' ') > 0 
+        THEN substr(d.device_name, 1, instr(d.device_name, ' ') - 1)
+        ELSE d.device_name
+    END AS first_word,
+    SUM(f.usage_duration_minutes) AS total_usage
+FROM fct_device_usage f
+INNER JOIN dim_device d
+    ON f.device_id = d.device_id
+INNER JOIN dim_service s
+    ON f.service_id = s.service_id
+WHERE f.usage_date >= '2024-07-01'
+  AND f.usage_date < '2024-10-01'
+GROUP BY first_word;
