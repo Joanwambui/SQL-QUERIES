@@ -1,0 +1,24 @@
+WITH service_totals AS (
+  SELECT
+    d.service_name,
+    SUM(f.usage_duration_minutes) AS service_minutes
+  FROM fct_device_usage f
+  JOIN dim_service d ON f.service_id = d.service_id
+  WHERE f.usage_date >= '2024-07-01'
+    AND f.usage_date <  '2024-10-01'
+    AND d.service_name IN ('Prime Video','Amazon Music')
+  GROUP BY d.service_name
+),
+grand_total AS (
+  SELECT SUM(usage_duration_minutes) AS total_minutes
+  FROM fct_device_usage
+  WHERE usage_date >= '2024-07-01'
+    AND usage_date <  '2024-10-01'
+)
+SELECT
+  s.service_name,
+  s.service_minutes,
+  ROUND( (s.service_minutes * 100.0) / NULLIF(g.total_minutes,0), 2) AS usage_percentage
+FROM service_totals s
+CROSS JOIN grand_total g
+ORDER BY s.service_name;
