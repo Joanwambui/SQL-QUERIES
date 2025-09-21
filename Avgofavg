@@ -1,0 +1,16 @@
+WITH july_bookings AS (
+    SELECT f.listing_id, f.nightly_price
+    FROM fct_bookings f
+    INNER JOIN dim_listings d
+        ON f.listing_id = d.listing_id
+    WHERE (d.amenities LIKE '%pool%' OR d.amenities LIKE '%ocean view%')
+      AND f.booking_date >= '2024-07-01'
+      AND f.booking_date < '2024-08-01'
+)
+, listing_avg AS (
+    SELECT listing_id, AVG(nightly_price) AS avg_price_per_listing
+    FROM july_bookings
+    GROUP BY listing_id
+)
+SELECT AVG(avg_price_per_listing) AS overall_avg_price
+FROM listing_avg;
