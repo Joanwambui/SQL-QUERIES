@@ -1,0 +1,16 @@
+WITH cte1 AS (
+    SELECT listing_id,
+           cleaning_fee,
+           CASE WHEN cleaning_fee IS NULL THEN nightly_price ELSE NULL END AS Nullnightlyprice,
+           CASE WHEN cleaning_fee IS NOT NULL THEN nightly_price ELSE NULL END AS NotNullnightlyprice
+    FROM fct_bookings
+    WHERE booking_date >= '2024-07-01'
+      AND booking_date < '2024-08-01'
+),
+cte2 AS (
+    SELECT AVG(Nullnightlyprice) AS avg1,
+           AVG(NotNullnightlyprice) AS avg2
+    FROM cte1
+)
+SELECT avg1 - avg2
+FROM cte2;
