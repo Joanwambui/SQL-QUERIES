@@ -1,0 +1,26 @@
+WITH listing_earnings AS (
+    SELECT
+        b.listing_id,
+        SUM(b.nightly_price * b.booked_nights + COALESCE(b.cleaning_fee,0)) AS total_earnings
+    FROM fct_bookings b
+    WHERE b.booking_date >= '2024-07-01'
+      AND b.booking_date < '2024-08-01'
+    GROUP BY b.listing_id
+),
+ranked AS (
+    SELECT
+        le.listing_id,
+        le.total_earnings,
+        ROW_NUMBER() OVER (ORDER BY le.total_earnings DESC) AS rn,
+        COUNT(*) OVER () AS total_listings
+    FROM listing_earnings le
+),
+top50 AS (
+    SELECT listing_id
+    FROM ranked
+    WHERE rn <= total_listings / 2  -- top 50%
+)
+SELECT
+    100.0 * SUM(CASE WHEN LOWER(l.amenities) LIKE '%ocean view%' THEN 1 ELSE 0 END) / COUNT(*) AS pct_ocean_view
+FROM top50 t
+JOIN dim_listings l ON l.listing_id = t.listing_id;
