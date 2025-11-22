@@ -1,0 +1,15 @@
+WITH cte1 AS (
+    SELECT COUNT(*) AS cnt
+    FROM fct_queries
+    WHERE DATE(query_timestamp) >= '2024-07-01'
+      AND DATE(query_timestamp) < '2024-08-01'
+      AND query_domain IN ('technology', 'science')
+),
+cte2 AS (
+    SELECT COUNT(*) AS cnt
+    FROM fct_queries
+    WHERE DATE(query_timestamp) >= '2024-07-01'
+      AND DATE(query_timestamp) < '2024-08-01'
+)
+SELECT (cte1.cnt * 100.0 / cte2.cnt) AS percentage_filtered
+FROM cte1, cte2;
