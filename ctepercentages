@@ -1,0 +1,26 @@
+WITH base AS (
+    SELECT
+        pricing_tier,
+        COUNT(subscription_id) AS total_subscriptions
+    FROM fct_subscriptions
+    WHERE start_date BETWEEN '2024-07-01' AND '2024-09-30'
+    GROUP BY pricing_tier
+),
+renewed AS (
+    SELECT
+        pricing_tier,
+        COUNT(subscription_id) AS renewed_subscriptions
+    FROM fct_subscriptions
+    WHERE start_date BETWEEN '2024-07-01' AND '2024-09-30'
+      AND renewal_status = 'Renewed'
+    GROUP BY pricing_tier
+)
+SELECT
+    b.pricing_tier,
+    ROUND(
+        COALESCE(r.renewed_subscriptions, 0) * 100.0 / b.total_subscriptions,
+        2
+    ) AS renewal_percentage
+FROM base b
+LEFT JOIN renewed r
+    ON b.pricing_tier = r.pricing_tier;
