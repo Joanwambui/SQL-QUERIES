@@ -29,3 +29,30 @@ FROM
 ORDER BY 
     Rnk
 LIMIT 2
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+with total as (
+SELECT COUNT (*) AS totalquantity, pricing_tier
+FROM fct_subscriptions
+WHERE start_date BETWEEN '2024-07-01' AND '2024-09-30' 
+GROUP BY pricing_tier),
+
+filtered as (
+SELECT COUNT(*) AS filteredquantity, pricing_tier
+FROM fct_subscriptions
+WHERE renewal_status = 'Renewed' AND
+start_date BETWEEN '2024-07-01' AND '2024-09-30'
+GROUP BY pricing_tier
+)
+
+SELECT f.filteredquantity*100/t.totalquantity AS retention_rate, t.pricing_tier, RANK () OVER (ORDER BY f.filteredquantity*100/t.totalquantity DESC )
+FROM filtered f
+LEFT JOIN total t 
+ON f.pricing_tier = t.pricing_tier
